@@ -1,0 +1,9 @@
+{
+  "name": "mongo-client",
+  "version": "1.0.0",
+  "main": "test-replica.js",
+  "dependencies": {
+    "mongodb": "^5.0.0"
+  }
+}
+

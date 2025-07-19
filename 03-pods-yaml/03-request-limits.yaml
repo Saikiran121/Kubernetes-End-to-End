@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: pod 
+metadata:
+  name: nginx-pod 
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx:latest
+    port:
+    - containerPort: 80 
+    resources:
+      requests:
+        cpu: "100m"                      # Minimum CPU guaranteed
+        memory: "128Mi"                  # Minimum memory guaranteed
+      limits:
+        cpu: "100m"                       # Maximum CPU allowed
+        memory: "128Mi"                # Maximum memory allowed
+  
+
+# This pod gets Guaranteed QoS - Its resources are reserved exactly and its the last to be evicted under pressure.

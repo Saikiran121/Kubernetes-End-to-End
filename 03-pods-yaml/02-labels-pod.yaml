@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: nginx-pod 
+  namespace: dev-environment         # Isolate in a namespace
+  labels:
+    app: demo                  # Key–value tags for grouping
+  annotations:
+    maintainer: saikiranbiradar76642@gmail.com
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx:latest
+    port:
+    - containerPort: 80
+
+
+
+# namespace scopes resources.
+# labels let Services and ReplicaSets select this Pod.
+# annotations store non-identifying metadata (e.g., owner).

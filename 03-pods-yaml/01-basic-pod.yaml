@@ -1,0 +1,15 @@
+apiVersion: v1 # Kubernetes API version
+kind: Pod # Type of Kubernetes object
+metadata:
+  name: hello-pod # Unique Pod name
+spec:
+  containers:
+  - name: hello # Container name
+    image: nginx-latest     # Container image from Docker Hub
+    ports:
+    - containerPort: 80  # Port the container listens on
+
+
+
+# WHAT HAPPENS
+# Kubernetes pull the nginx image, creates a Pod named hello-pod, and runs one container listening on port 80

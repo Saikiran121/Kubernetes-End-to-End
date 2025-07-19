@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-with-logging
+  labels:
+    app: web-logging
+spec:
+  restartPolicy: Always
+  volumes:
+  - name: log-vol
+    emptyDir: {}
+  containers:
+  - name: web
+    image: nginx:1.23
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: log-vol
+      mountPath: /var/log/nginx    # <-- mount at Nginx’s log directory
+  - name: log-shipper
+    image: busybox
+    command:
+      - sh
+      - -c
+      - |
+        # Continuously follow the Nginx access.log
+        tail -F /var/log/nginx/access.log
+    volumeMounts:
+    - name: log-vol
+      mountPath: /var/log/nginx    # <-- same path for the sidecar

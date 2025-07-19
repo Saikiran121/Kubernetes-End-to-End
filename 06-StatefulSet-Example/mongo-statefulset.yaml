@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+  namespace: data-app
+spec:
+  serviceName: mongo-svc
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:6.0
+        command:
+          - /bin/sh
+          - -c
+          - |
+            # Start MongoDB in background
+            mongod --replSet rs0 --bind_ip_all &
+            # Wait for server to listen
+            until mongosh --host localhost:27017 --eval "print('ready')" &>/dev/null; do sleep 2; done
+            # Only initialize replica set once
+            if [ "$(hostname)" = "mongo-0" ]; then
+              mongosh --host localhost:27017 --eval '
+                rs.initiate({
+                  _id: "rs0",
+                  members: [
+                    {_id: 0, host: "mongo-0.mongo-svc.data-app.svc.cluster.local:27017"},
+                    {_id: 1, host: "mongo-1.mongo-svc.data-app.svc.cluster.local:27017"},
+                    {_id: 2, host: "mongo-2.mongo-svc.data-app.svc.cluster.local:27017"}
+                  ]
+                });
+              '
+            fi
+            # Wait indefinitely to keep container alive
+            wait
+        volumeMounts:
+          - name: data
+            mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 5Gi
