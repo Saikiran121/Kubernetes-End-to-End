@@ -1,0 +1,10 @@
+# High-performance storage class
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ultra-fast
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: io2           # Provisioned IOPS
+  iopsPerGB: "100"    # 100 IOPS per GB
+volumeBindingMode: WaitForFirstConsumer  # Zone-aware scheduling

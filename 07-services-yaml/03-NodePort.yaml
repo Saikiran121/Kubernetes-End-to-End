@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service 
+metadata: 
+  name: web-nodeport 
+spec:
+  type: NodePort # Service type for external access
+  selector:
+    app: web 
+  ports:
+  - port: 80
+    targetPort: 8080 
+    nodePort: 30080
+
+
+# Use Case: Development testing, simple external access without cloud load balancer

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: my-pod 
+spec: 
+  containers: 
+  - name: app
+    image: nginx 
+    volumeMounts:
+    - name: storage 
+      mountPath: /data 
+  volumes:
+  - name: storage
+    persistentVolumeClaim:
+      claimName: my-pvc  # Referring to the PVC created in 02-p

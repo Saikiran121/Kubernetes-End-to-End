@@ -1,0 +1,28 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata:
+  name: myapp-deployment
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp 
+  template:
+    metadata:
+      labels:
+        app: myapp 
+  spec:
+    containers:
+    - name: myapp-container 
+      image: nginx:latest 
+      ports: 
+      - containerPort: 80
+
+
+# Simple Meaning:
+#a. apiVersion/kind: What resource you’re creating (a Deployment).
+#b. metadata.name: How you refer to it.
+#c. spec.replicas: How many copies of your app.
+#d. selector + template.labels: Which Pods belong to this Deployment.
+#e. template.spec.containers: Your application’s container image and port.
+

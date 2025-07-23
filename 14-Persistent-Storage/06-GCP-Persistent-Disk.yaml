@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass 
+metadata:
+  name: gcp-persistent-disk
+provisioner: kubernetes.io/gce-pd
+parameters: 
+  type: pd-ssd  # Specify the type of GCP Persistent Disk
+  zones: us-central1-a,us-central1-b  # Specify availability zones

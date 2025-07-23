@@ -1,0 +1,10 @@
+# Secure StorageClass with encryption
+apiVersion: storage.k8s.io/v1
+kind: StorageClass 
+metadata: 
+  name: secure-storage 
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp3 
+  encryted: "true"  # Enable encryption
+  kmsKeyId: "arn:aws:kms:region:account:key/key-id"

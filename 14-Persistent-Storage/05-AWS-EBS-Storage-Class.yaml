@@ -1,0 +1,11 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass 
+metadata:
+  name: fast-storage 
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp3 
+  fsType: ext4 
+  zones: ap-south-1a,ap-south-1b  # Specify availability zones
+reclaimPolicy: Delete  # Automatically delete PV when PVC is deleted 
+volumeBindingMode: WaitForFirstConsumer  # Delay binding until a Pod is scheduled

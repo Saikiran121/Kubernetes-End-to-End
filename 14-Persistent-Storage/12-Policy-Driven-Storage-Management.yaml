@@ -1,0 +1,14 @@
+# StorageClass with organizational policies
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: enterprise-storage
+  annotations:
+    policy.company.com/cost-center: "engineering"
+    policy.company.com/compliance: "sox-compliant"
+provisioner: custom.storage.com/enterprise
+parameters:
+  tier: premium
+  backup: enabled
+  compliance: sox
+  retention: "7-years"
